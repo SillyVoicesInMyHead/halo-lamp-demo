@@ -39,7 +39,7 @@
     bloom.style.opacity = b;
     day.style.opacity = 0.32 * smooth(0.6, 1, p);
     bloom.style.transform = 'scale(' + (0.7 + b * 0.9) + ')';
-    var sc = 1.14 - p * 0.08;
+    var sc = 1.08 - p * 0.06;
     imgs.forEach(function (im) { im.style.transform = 'scale(' + sc + ')'; });
     var mins = Math.round(330 + p * 75);
     tEl.textContent = pad(Math.floor(mins / 60)) + ':' + pad(mins % 60);
@@ -80,6 +80,10 @@
     apply(el, g);
     img.parentNode.style.setProperty('--sx', (g.x / g.W * 100) + '%');
     img.parentNode.style.setProperty('--sy', ((g.y - g.w / 2) / g.H * 100) + '%');
+    // bedding fades out fully before the nightstand's left edge, measured, at every width
+    var ln = $('.l-linen img');
+    // the nightstand's left edge sits ~1.17 lamp widths left of the lamp's centre (measured)
+    if (ln) { var le = Math.max(0, g.x - g.w * 1.25 - 16); ln.style.setProperty('--le', le + 'px'); ln.style.setProperty('--ls', Math.max(0, le - g.W * 0.18) + 'px'); }
   }
   // sunrise: the two photos put the nightstand in slightly different places, so one lamp glides
   // from the night spot to the morning spot as the photos crossfade (t = morning opacity)
