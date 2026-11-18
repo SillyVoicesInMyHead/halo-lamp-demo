@@ -77,10 +77,10 @@ h1{font-size:clamp(2.9rem,7.4vw,7.6rem);margin-bottom:24px;text-wrap:balance}
 .sunrise{height:480vh;position:relative}
 .sr-stage{position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;background:#05060c}
 .sr-layer{position:absolute;inset:0}
-.sr-layer img{width:100%;height:100%;object-fit:cover;transform:scale(1.12)}
-.sr-night img{object-position:50% 60%;filter:brightness(1.1)}
+.sr-layer > img{width:100%;height:100%;object-fit:cover;transform:scale(1.12)}
+.sr-night > img{object-position:50% 60%;filter:brightness(1.1)}
 .sr-morning{opacity:0}
-.sr-morning img{object-position:50% 60%}
+.sr-morning > img{object-position:50% 60%}
 .sr-cold{background:linear-gradient(180deg,rgba(14,30,80,.55),rgba(8,12,40,.65))}
 .sr-amber{background:radial-gradient(90% 80% at 58% 40%,rgba(255,150,60,.55),rgba(190,60,20,.28) 55%,transparent 80%);opacity:0;mix-blend-mode:screen}
 .sr-bloom{background:radial-gradient(40% 50% at 58% 36%,rgba(255,240,205,.85),rgba(255,214,150,.35) 45%,transparent 72%);opacity:0;mix-blend-mode:screen;transform-origin:58% 36%}
@@ -149,7 +149,7 @@ h2{font-size:clamp(2.3rem,5.4vw,5.2rem);max-width:13em;text-wrap:balance}
   .l-photo .room{object-position:88% 50%;transform:scale(1.12) translateY(-10%)}
   .l-photo::after{background:radial-gradient(90% 60% at var(--sx,50%) var(--sy,40%),transparent 15%,rgba(11,10,16,.9) 70%)}
   .sunrise{height:380vh;height:380svh}
-  .sr-morning img{object-position:60% 25%}
+  .sr-layer > img{object-position:86% 60%}
   .sr-clock{top:calc(var(--nav) + 3vh)}
   .sr-caps{bottom:17vh}
   .card{grid-template-columns:1fr;min-height:0;padding:28px 24px 32px;margin-bottom:10vh;border-radius:22px}

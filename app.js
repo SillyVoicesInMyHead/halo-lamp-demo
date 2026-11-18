@@ -45,6 +45,7 @@
     tEl.textContent = pad(Math.floor(mins / 60)) + ':' + pad(mins % 60);
     kEl.textContent = Math.round((1800 + p * 3400) / 50) * 50;
     bar.style.transform = 'scaleX(' + p + ')';
+    placeSunriseLamp(smooth(0.3, 0.62, p));
     caps.forEach(function (c, i) {
       var T = [0, 0.27, 0.53, 0.8, 1.01], a = T[i], z = T[i + 1], fadeIn = smooth(a - 0.02, a + 0.06, p), fadeOut = i === 3 ? 1 : 1 - smooth(z - 0.06, z, p);
       var o = i === 0 ? fadeOut : fadeIn * fadeOut;
@@ -53,29 +54,49 @@
     });
   }
 
-  // pin the lamp to the nightstand: map a point in the photo's own pixels to the screen,
-  // using the photo's real object-fit crop and transform, so it stays put at every size
-  function placeOnStand() {
-    var el = $('#onStand'), img = $('.l-photo .room'), layer = img.parentNode;
-    // the lamp lives in its own layer above the wash; both layers fill the stage, so photo coordinates carry over
-    if (!el || !img.naturalWidth) return;
+  // pin a lamp to a nightstand: map a point in the photo's own pixels (px, py; pw is the lamp
+  // width in photo pixels) to the screen, using the photo's real object-fit crop and transform,
+  // so it stays on the furniture at every screen size
+  function geom(img, px, py, pw) {
     var W = img.offsetWidth, H = img.offsetHeight, nw = img.naturalWidth, nh = img.naturalHeight;
-    var k = Math.max(W / nw, H / nh), dw = nw * k, dh = nh * k;
+    var k = Math.max(W / nw, H / nh);
     var pos = getComputedStyle(img).objectPosition.split(' ').map(parseFloat);
     var m = new DOMMatrixReadOnly(getComputedStyle(img).transform);
-    var x = (W - dw) * pos[0] / 100 + (+el.dataset.x) * k;
-    var y = (H - dh) * pos[1] / 100 + (+el.dataset.y) * k;
-    x = W / 2 + m.a * (x - W / 2) + m.e; y = H / 2 + m.d * (y - H / 2) + m.f;
-    var w = (+el.dataset.w) * k * m.a, h = w * 500 / 513;
-    el.style.width = w + 'px';
-    el.style.transform = 'translate(' + (x - w / 2) + 'px,' + (y - h * 0.97) + 'px)';
-    el.classList.add('placed');
-    layer.style.setProperty('--sx', (x / W * 100) + '%');
-    layer.style.setProperty('--sy', ((y - h / 2) / H * 100) + '%');
+    var x = (W - nw * k) * pos[0] / 100 + px * k, y = (H - nh * k) * pos[1] / 100 + py * k;
+    return { x: W / 2 + m.a * (x - W / 2) + m.e, y: H / 2 + m.d * (y - H / 2) + m.f, w: pw * k * m.a, W: W, H: H };
   }
-  var roomImg = $('.l-photo .room');
-  if (roomImg.complete) placeOnStand(); else roomImg.addEventListener('load', placeOnStand);
-  addEventListener('resize', placeOnStand);
+  function apply(el, g) {
+    var h = g.w * 500 / 513;
+    el.style.width = g.w + 'px';
+    el.style.transform = 'translate(' + (g.x - g.w / 2) + 'px,' + (g.y - h * 0.97) + 'px)';
+    el.classList.add('placed');
+  }
+  var nums = function (v) { return v.split(',').map(Number); };
+  // hero: the lamp has its own layer above the wash (same depth as the photo); both fill the stage
+  function placeHero() {
+    var el = $('#onStand'), img = $('.l-photo .room');
+    if (!el || !img.naturalWidth) return;
+    var g = geom(img, +el.dataset.x, +el.dataset.y, +el.dataset.w);
+    apply(el, g);
+    img.parentNode.style.setProperty('--sx', (g.x / g.W * 100) + '%');
+    img.parentNode.style.setProperty('--sy', ((g.y - g.w / 2) / g.H * 100) + '%');
+  }
+  // sunrise: the two photos put the nightstand in slightly different places, so one lamp glides
+  // from the night spot to the morning spot as the photos crossfade (t = morning opacity)
+  var srT = 0;
+  function placeSunriseLamp(t) {
+    if (t != null) srT = t;
+    var el = $('#srLamp'), ni = $('.sr-night > img'), mi = $('.sr-morning > img');
+    if (!el || !ni.naturalWidth || !mi.naturalWidth) return;
+    var a = geom.apply(null, [ni].concat(nums(el.dataset.night)));
+    var b = geom.apply(null, [mi].concat(nums(el.dataset.morning)));
+    var l = function (p, q) { return p + (q - p) * srT; };
+    apply(el, { x: l(a.x, b.x), y: l(a.y, b.y), w: l(a.w, b.w) });
+  }
+  function placeLamps() { placeHero(); placeSunriseLamp(); }
+  $$('.l-photo .room, .sr-layer > img').forEach(function (img) { if (!img.complete) img.addEventListener('load', placeLamps); });
+  placeLamps();
+  addEventListener('resize', placeLamps);
 
   if (reduce || !window.gsap || !window.ScrollTrigger) {
     renderSunrise(1);
