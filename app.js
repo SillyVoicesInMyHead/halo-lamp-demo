@@ -98,6 +98,13 @@
   placeLamps();
   addEventListener('resize', placeLamps);
 
+  // reserve button: an honest answer, works without GSAP or with reduced motion
+  var cta = $('#cta'), ctaMsg = $('#ctaMsg');
+  if (cta) cta.addEventListener('click', function () {
+    ctaMsg.textContent = 'Halo is a design demo, so there is nothing to reserve yet. Thanks for scrolling all the way down.';
+    ctaMsg.classList.add('flash');
+  });
+
   if (reduce || !window.gsap || !window.ScrollTrigger) {
     renderSunrise(1);
     return;
@@ -125,7 +132,8 @@
 
   // layered parallax + lamp brightening with scroll
   var layers = $$('.hero .layer').map(function (l) { return { el: l, d: parseFloat(l.dataset.depth) }; });
-  var lamp = $('#lamp'), glow = $('#wallGlow'), rings = $$('.ring'), hero = $('.hero-copy');
+  var fg = $('.l-fg'), stand = $('#onStand'), lampLayer = $('.l-lamp');
+  var glow = $('#wallGlow'), rings = $$('.ring'), hero = $('.hero-copy');
     ScrollTrigger.create({
     trigger: '.hero', start: 'top top', end: 'bottom bottom', scrub: true,
     onUpdate: function (st) {
@@ -134,8 +142,12 @@
         var y = -p * o.d * H * (o.el.classList.contains('l-fg') ? 0.5 : 0.55);
         o.el.style.transform = 'translate3d(0,' + y + 'px,0)';
       });
-      lamp.style.filter = 'brightness(' + (1 + p * 0.45).toFixed(3) + ') drop-shadow(0 4px 6px rgba(0,0,0,.55))';
       glow.style.opacity = 0.75 + p * 0.25;
+      // the dark wipe passes in front of the nightstand; dim the lamp by exactly the wipe's
+      // darkness at the lamp's base, so lamp and furniture always fade together (never floats)
+      var fr = fg.getBoundingClientRect(), rel = (stand.getBoundingClientRect().bottom - fr.top) / fr.height;
+      var a = rel <= 0 ? 0 : rel < 0.22 ? 0.85 * rel / 0.22 : rel < 0.4 ? 0.85 + 0.15 * (rel - 0.22) / 0.18 : 1;
+      lampLayer.style.opacity = (1 - a).toFixed(3);
       rings.forEach(function (r, i) { r.setAttribute('transform', 'translate(210 210) scale(' + (1 + p * 0.25 * (i + 1)) + ') translate(-210 -210)'); });
       hero.style.opacity = 1 - smooth(0.2, 0.5, p);
       hero.style.transform = 'translate3d(0,' + (-p * 60) + 'px,0)';
@@ -163,8 +175,10 @@
   cards.forEach(function (c, i) {
     if (i === cards.length - 1) return;
     var next = cards[i + 1];
-    gsap.to(c, { scale: 0.95, filter: 'brightness(.72)', ease: 'none',
-      scrollTrigger: { trigger: next, start: 'top 85%', end: 'top 25%', scrub: true } });
+    // dim only once the next card actually starts to cover this one
+    gsap.to(c, { scale: 0.95, '--dim': 0.3, ease: 'none',
+      scrollTrigger: { trigger: next, start: function () { return 'top ' + (c.offsetHeight * 0.9 + parseFloat(getComputedStyle(c).top)) + 'px'; },
+        end: 'top 25%', scrub: true, invalidateOnRefresh: true } });
   });
   // draw-on curve in first card
   var draw = $('.draw');
