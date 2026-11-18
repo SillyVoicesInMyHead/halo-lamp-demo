@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Halo — the lamp that rises</title>
+<meta name="description" content="Halo is a bedside lamp that wakes you with a thirty-minute sunrise. A fictional product, built as a design test.">
+<meta name="theme-color" content="#0b0a10">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230b0a10'/%3E%3Cpath d='M6 22a10 10 0 0 1 20 0z' fill='%23ffb35c'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=3">
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top" aria-label="Halo, back to top">
+    <svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true"><path d="M5 23a11 11 0 0 1 22 0z" fill="currentColor"/><path d="M2 27h28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <span>Halo</span>
+  </a>
+  <nav class="nav-links" aria-label="Sections">
+    <a href="#sunrise">Sunrise</a>
+    <a href="#features">Features</a>
+    <a href="#specs">Specs</a>
+  </nav>
+  <a class="btn btn-small" href="#reserve">Reserve</a>
+</header>
+
+<main id="top">
+
+<!-- HERO: five depth layers -->
+<section class="hero" id="hero">
+  <div class="stage">
+    <div class="layer l-photo" data-depth="0.06" aria-hidden="true">
+      <img class="room" src="assets/gen/room-night.webp" alt="" fetchpriority="high">
+    </div>
+    <div class="layer l-wash" data-depth="0.12" aria-hidden="true"></div>
+    <div class="layer l-spill" data-depth="0.16" id="spill" aria-hidden="true"></div>
+    <!-- same depth as the photo, so the lamp stays on the nightstand while scrolling -->
+    <div class="layer l-lamp" data-depth="0.06">
+      <div class="on-stand" id="onStand" data-x="1238" data-y="482" data-w="190">
+        <div class="wall-glow" id="wallGlow"></div>
+        <svg class="lamp-rings" viewBox="0 0 420 420" aria-hidden="true">
+          <circle class="ring" cx="210" cy="210" r="60" fill="none" stroke="#ffd69a" stroke-opacity=".22"/>
+          <circle class="ring" cx="210" cy="210" r="95" fill="none" stroke="#ffd69a" stroke-opacity=".13"/>
+          <circle class="ring" cx="210" cy="210" r="135" fill="none" stroke="#ffd69a" stroke-opacity=".07"/>
+        </svg>
+        <img class="lamp-img" id="lamp" src="assets/gen/lamp-cut.webp" alt="Halo lamp on the nightstand: a frosted glass dome glowing amber on a graphite base with a brass ring">
+        <div class="stand-pool"></div>
+      </div>
+    </div>
+    <div class="layer l-motes" data-depth="0.5" id="motes" aria-hidden="true"></div>
+    <div class="layer l-linen" data-depth="0.8" aria-hidden="true"><img src="assets/gen/fg-linen.webp" alt=""></div>
+    <div class="layer l-fg" data-depth="1" aria-hidden="true">
+      <svg viewBox="0 0 1440 420" preserveAspectRatio="none">
+        <defs><linearGradient id="rimG" x1="0" x2="1"><stop offset="0" stop-color="#ffb35c" stop-opacity="0"/><stop offset=".6" stop-color="#ffb35c" stop-opacity=".5"/><stop offset="1" stop-color="#ffb35c" stop-opacity=".1"/></linearGradient></defs>
+        <path d="M0 150C170 70 360 130 560 96S960 40 1170 112 1390 92 1440 104V420H0Z" fill="#07060a"/>
+        <path d="M0 150C170 70 360 130 560 96S960 40 1170 112 1390 92 1440 104" fill="none" stroke="url(#rimG)" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="hero-copy">
+      <h1 data-split>Wake up inside the light.</h1>
+      <p class="lede">Halo is a bedside lamp that rises like a sunrise over thirty minutes, so you open your eyes before an alarm has to ask.</p>
+      <div class="cta-row">
+        <a class="btn" href="#reserve">Reserve Halo · $289</a>
+        <a class="link" href="#sunrise">Watch it rise <span aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO: word by word, scrubbed -->
+<section class="manifesto">
+  <p data-reveal>An alarm is a shout in the dark. Halo is the window you never had. It brings the room up from ember to daylight, slowly enough that waking feels like your own idea.</p>
+</section>
+
+<!-- PINNED SUNRISE -->
+<section class="sunrise" id="sunrise" aria-label="A morning with Halo, from 5:30 to 6:45">
+  <div class="sr-stage">
+    <div class="sr-layer sr-night"><img src="assets/gen/room-night.webp" alt=""></div>
+    <div class="sr-layer sr-morning"><img src="assets/gen/room-sunrise.webp" alt="The same bedroom flooded with warm sunrise light"></div>
+    <div class="sr-layer sr-cold"></div>
+    <div class="sr-layer sr-amber"></div>
+    <div class="sr-layer sr-bloom"></div>
+    <div class="sr-layer sr-day"></div>
+    <div class="sr-layer sr-shade"></div>
+
+    <div class="sr-clock" aria-hidden="true">
+      <div class="time" id="srTime">05:30</div>
+      <div class="kelvin"><span id="srK">1800</span> K</div>
+    </div>
+
+    <div class="sr-caps">
+      <p class="cap" data-i="0"><b>05:30</b> The room is still night. Halo starts at 1800 K, the colour of a dying candle.</p>
+      <p class="cap" data-i="1"><b>05:50</b> Amber climbs the wall. Your body starts to notice before you do.</p>
+      <p class="cap" data-i="2"><b>06:10</b> The light turns white-gold. You are mostly awake and nothing has made a sound.</p>
+      <p class="cap" data-i="3"><b>06:30</b> Full morning. The chime never had to play.</p>
+    </div>
+    <div class="sr-track" aria-hidden="true"><i id="srBar"></i></div>
+    <p class="sr-note">Scroll to run the morning. Times are an example schedule.</p>
+  </div>
+</section>
+
+<!-- STICKY CARD STACK -->
+<section class="features" id="features">
+  <div class="features-head">
+    <h2 data-split>Four things it does, and nothing else.</h2>
+  </div>
+  <div class="stack">
+    <article class="card c1">
+      <div class="card-text">
+        <h3>The sunrise curve</h3>
+        <p>Thirty minutes from 1800 K to 5200 K, on a curve shaped like a real horizon, slow at first and then all at once. Set the length anywhere from 10 to 60 minutes.</p>
+      </div>
+      <svg class="card-art" viewBox="0 0 320 200" role="img" aria-label="A curve rising from low amber to bright white over time">
+        <path d="M20 180H300" stroke="currentColor" stroke-opacity=".4"/>
+        <path d="M20 20V180" stroke="currentColor" stroke-opacity=".4"/>
+        <path class="draw" d="M20 172C110 170 150 150 200 96S280 34 300 28" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="300" cy="28" r="7" fill="currentColor"/>
+        <text x="22" y="196" font-size="11" fill="currentColor" fill-opacity=".7">0 min</text>
+        <text x="262" y="196" font-size="11" fill="currentColor" fill-opacity=".7">30 min</text>
+      </svg>
+    </article>
+    <article class="card c2">
+      <div class="card-text">
+        <h3>Dusk, in reverse</h3>
+        <p>At night the same light sets. It falls from warm amber to dark over twenty minutes, so reading in bed ends in sleep instead of glare.</p>
+      </div>
+      <svg class="card-art" viewBox="0 0 320 200" role="img" aria-label="A half sun sinking below a line">
+        <defs><clipPath id="cl2"><rect x="0" y="0" width="320" height="130"/></clipPath></defs>
+        <g clip-path="url(#cl2)"><circle cx="160" cy="130" r="70" fill="currentColor"/><circle cx="160" cy="130" r="96" fill="none" stroke="currentColor" stroke-opacity=".5"/><circle cx="160" cy="130" r="124" fill="none" stroke="currentColor" stroke-opacity=".25"/></g>
+        <path d="M30 130H290" stroke="currentColor" stroke-width="2"/>
+        <path d="M70 150H250M110 168H210" stroke="currentColor" stroke-opacity=".4" stroke-width="2"/>
+      </svg>
+    </article>
+    <article class="card c3">
+      <div class="card-text">
+        <h3>One dial, no app</h3>
+        <p>Turn the brass ring for brightness. Press to snooze, hold to stop. Your phone can sleep in another room.</p>
+      </div>
+      <img class="card-photo" src="assets/gen/dial.webp" alt="A thumb turning the brass dial on the lamp base" loading="lazy">
+    </article>
+    <article class="card c4">
+      <div class="card-text">
+        <h3>A backup you won't need</h3>
+        <p>If you haven't stirred ten minutes after full light, a soft chime fades in. It is the only sound Halo ever makes.</p>
+      </div>
+      <svg class="card-art" viewBox="0 0 320 200" role="img" aria-label="A sound wave growing from flat to wide">
+        <path d="M20 100H70C90 100 96 80 110 80S130 120 146 120S166 60 186 60S206 140 226 140S246 30 266 30S290 100 300 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </article>
+  </div>
+</section>
+
+<!-- SPECS + PRICE -->
+<section class="specs" id="specs">
+  <div class="specs-bg" aria-hidden="true"><img src="assets/gen/lamp-day.webp" alt=""></div>
+  <div class="specs-inner">
+    <h2 data-split>Built to sit beside a bed.</h2>
+    <dl class="spec-list">
+      <div><dt>Light</dt><dd>120 LEDs, 1800 to 5200 K, up to 800 lm</dd></div>
+      <div><dt>Body</dt><dd>Spun aluminium, borosilicate glass, brass dial</dd></div>
+      <div><dt>Size</dt><dd>28 cm tall, 1.4 kg</dd></div>
+      <div><dt>Power</dt><dd>USB-C, 18 W. No battery</dd></div>
+      <div><dt>Setup</dt><dd>Dial only. Wi-Fi is optional and off by default</dd></div>
+    </dl>
+    <div class="buy" id="reserve">
+      <div class="price"><span class="num">$289</span><span class="per">one lamp, cable included</span></div>
+      <a class="btn btn-big" href="#reserve" id="cta">Reserve Halo</a>
+      <p class="fine">Fictional product. No payment is taken on this page.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-row">
+    <p class="foot-brand">Halo</p>
+    <p>A design test: a made-up lamp for a made-up company. Nothing here is for sale.</p>
+  </div>
+  <p class="credits">All photography on this page is AI-generated for this demo (Figma AI). The product, the brand and the room do not exist. Type: Newsreader and Manrope.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="app.js?v=3"></script>
+</body>
+</html>
